@@ -1,0 +1,22 @@
+# IntelliJ
+.idea/
+*.iml
+out/
+gen/
+
+# Maven/Gradle
+target/
+build/
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Java
+*.class
+
+# Environment variables
+.env
