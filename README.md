@@ -214,6 +214,7 @@ Al iniciar:
 8. El destinatario puede recibirla y continuar la operación
 
 ## 📊 Ejemplos Visuales
+![System](docs/images/system.png)
 
 ## 🧪 Testing
 
@@ -254,4 +255,5 @@ Opciones recomendadas:
 **Desarrollado por Sebastián Alpízar Porras**
 GitHub: https://github.com/sebastian-alpizar
 Email: sebastianalpiz@gmail.com
+
 
