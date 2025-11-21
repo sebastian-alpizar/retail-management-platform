@@ -58,4 +58,99 @@ Incluye:
 - NetBeans / IntelliJ IDEA
 - Git & GitHub
 
+## 🧱 Arquitectura del Proyecto
 
+El sistema se divide en tres módulos principales:
+
+### 🔧 BackendSPV (Servidor)
+
+Ubicación: `/BackendSPV`
+
+Responsabilidades:
+
+- Procesar peticiones enviadas desde los Frontend
+- Acceder a la base de datos (único punto de persistencia)
+- Manejar múltiples conexiones mediante hilos
+- Enviar notificaciones asíncronas a los Frontend activos
+(login, logout, transferencia de facturas)
+- Gestionar operaciones CRUD mediante DAOs
+
+```bash
+BackendSPV/
+ ├── datos/      // DAO y conexión MySQL
+ ├── logica/     // Backend, Server, hilos y procesamiento
+ └── BackendSPV.java  // Entry point del servidor
+```
+### 🖥️ SistemaPuntoDeVenta (Frontend)
+
+Ubicación: `/SistemaPuntoDeVenta`
+
+Responsabilidades:
+
+- Presentar la interfaz gráfica (Java Swing)
+- Gestionar navegación y vistas (panels)
+- Comunicarse con Backend mediante Proxy + Sockets
+- Mostrar usuarios conectados en tiempo real
+- Permitir enviar y recibir facturas en trámite
+- Implementar MVC en todos los módulos de UI
+- Estructura destacada:
+
+```bash
+SistemaPuntoDeVenta/
+ ├── Controller/   // Controladores MVC
+ ├── View/         // UI (login, panels, main window)
+ ├── Model/        // Proxy y lógica local
+ └── Main.java     // Entry point del Frontend
+```
+
+### 📦 SistemaEntidades (Entidades Compartidas)
+
+Ubicación: `/SistemaEntidades`
+
+Incluye clases como:
+
+- Usuario
+- Cliente
+- Cajero
+- Producto
+- Factura
+- LineaFactura
+- Mensaje (para comunicación por sockets)
+
+Estas clases son utilizadas por Backend y Frontend como librería.
+
+## 🧰 Requisitos Previos
+
+Asegúrate de tener instalado:
+
+- Java 17+
+- Maven 3+
+- MySQL 8
+- IDE recomendado: NetBeans / IntelliJ IDEA
+
+## 🚀 Instalación
+1️⃣ Clonar el repositorio
+
+```bash
+git clone https://github.com/sebastian-alpizar/retail-management-platform.git
+cd retail-management-platform
+```
+
+## ⚙️ Configuración del Backend
+2️⃣ Configurar la base de datos MySQL
+
+Crea una base llamada:
+
+```bash
+retail_spv
+```
+
+Actualiza el archivo `.env` del backend:
+
+```bash
+DB_HOST=localhost
+DB_PORT=3306
+DB_NAME=ProyectoDatabase
+DB_USER=root
+DB_PASSWORD=
+```
