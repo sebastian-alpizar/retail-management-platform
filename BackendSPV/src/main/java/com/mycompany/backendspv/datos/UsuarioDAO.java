@@ -1,6 +1,5 @@
 package com.mycompany.backendspv.datos;
 
-import com.mycompany.backendspv.datos.ConectorDatabase;
 import mycompany.sistemaentidades.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,9 +9,8 @@ import java.sql.SQLException;
 
 public class UsuarioDAO {
     public Boolean agregarUsuario(Usuario usuario) {
-        ConectorDatabase conector = new ConectorDatabase();
         String sql = "INSERT INTO Usuario (id, password) VALUES (?, ?)";
-        try (Connection conn = conector.getConnection();
+        try (Connection conn = ConectorDatabase.getConnection();
             PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             pstmt.setString(1, usuario.getId());
@@ -27,11 +25,10 @@ public class UsuarioDAO {
     }
 
     public Boolean existeUsuario(Usuario usuario) {
-        ConectorDatabase conector = new ConectorDatabase();
         String sql = "SELECT * FROM Usuario WHERE id = ? AND password = ?";
         
-        try (Connection conn = conector.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        try (Connection conn = ConectorDatabase.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql)) {
             
             pstmt.setString(1, usuario.getId());
             pstmt.setString(2, usuario.getPassword());

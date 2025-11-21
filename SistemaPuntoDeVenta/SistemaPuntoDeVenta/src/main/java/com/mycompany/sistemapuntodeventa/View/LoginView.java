@@ -4,8 +4,17 @@ import com.mycompany.sistemapuntodeventa.Controller.Proxy;
 import javax.swing.*;
 import java.awt.*;
 import mycompany.sistemaentidades.*;
+import io.github.cdimascio.dotenv.Dotenv;
 
 public class LoginView extends JFrame {
+    private static final Dotenv dotenv = Dotenv.configure()
+        .directory("./SistemaPuntoDeVenta/SistemaPuntoDeVenta")
+        .ignoreIfMissing()
+        .load();
+        
+    private String HOST = dotenv.get("APP_PROXY_HOST");
+    private int PORT = Integer.parseInt(dotenv.get("APP_PROXY_PORT"));
+
     private JTextField usernameField;
     private JPasswordField passwordField;
     private JButton loginButton;
@@ -50,7 +59,7 @@ public class LoginView extends JFrame {
         String username = usernameField.getText();
             String password = new String(passwordField.getPassword());
             if (!username.isEmpty() && !password.isEmpty()) {
-                proxy = new Proxy(new Usuario(username, password), "localhost", 12345, new UsuariosPanel());
+                proxy = new Proxy(new Usuario(username, password), HOST, PORT, new UsuariosPanel());
                 if (autenticarUsuario()) {
                     JOptionPane.showMessageDialog(LoginView.this, "Inicio de session exitoso", "Éxito", JOptionPane.INFORMATION_MESSAGE);
                     abrirVentanaPrincipal(proxy);

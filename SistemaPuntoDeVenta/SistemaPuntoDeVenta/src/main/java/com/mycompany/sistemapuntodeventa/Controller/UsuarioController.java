@@ -10,13 +10,14 @@ public class UsuarioController {
     private UsuariosPanel usuarioPanel;
     private FacturaController controller;
     private Proxy proxy;
-    private List<Mensaje> mensajes;
+    private List<Mensaje<?>> mensajes;
     
     public UsuarioController(UsuariosPanel usuariosPanel, Proxy proxy, FacturaController controller){
         this.usuarioPanel = usuariosPanel;
         this.proxy = proxy;
         this.controller = controller;
-        mensajes = new ArrayList();
+        mensajes = new ArrayList<Mensaje<?>>();
+
         
         usuarioPanel.getEnviarButton().addActionListener(e -> enviarFactura());
         usuarioPanel.getRecibirButton().addActionListener(e -> recibirFactura());
@@ -46,7 +47,7 @@ public class UsuarioController {
         String user = usuarioPanel.getSelectedUser();
         if (!mensajes.isEmpty()){
             if (user != null){
-                for (Mensaje msj: mensajes){
+                for (Mensaje<?> msj: mensajes){
                     if (msj.getEmisor().equals(user)){
                         Factura fac = (Factura) msj.getDatos();
                         controller.setearPanel(fac);
@@ -64,7 +65,7 @@ public class UsuarioController {
         
     }
     
-    public void agregarMensaje(Mensaje mensaje){
+    public void agregarMensaje(Mensaje<?> mensaje){
         mensajes.add(mensaje);
         usuarioPanel.marcarCheckboxPorId(mensaje.getEmisor());
     }

@@ -17,11 +17,10 @@ public class LineaFacturaDAO {
     }
     
     public Boolean guardarLineasFactura(String facturaId, List<LineaFactura> lineasFactura) throws SQLException {
-        ConectorDatabase conector = new ConectorDatabase();
         String sql = "INSERT INTO LineaFactura (factura_id, producto_codigo, cantidad, descuento, total) VALUES (?, ?, ?, ?, ?)";
         
-        try (Connection conn = conector.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        try (Connection conn = ConectorDatabase.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql)) {
             
             for (LineaFactura linea : lineasFactura) {
                 pstmt.setString(1, facturaId);
@@ -40,12 +39,11 @@ public class LineaFacturaDAO {
     }
 
     public List<LineaFactura> buscarLineasFactura(String facturaId) throws SQLException {
-        ConectorDatabase conector = new ConectorDatabase();
         List<LineaFactura> lineasFactura = new ArrayList<>();
         String sql = "SELECT * FROM LineaFactura WHERE factura_id = ?";
 
-        try (Connection conn = conector.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        try (Connection conn = ConectorDatabase.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             pstmt.setString(1, facturaId);
             ResultSet rs = pstmt.executeQuery();

@@ -11,11 +11,10 @@ import java.util.List;
 
 public class ClienteDAO {
     public Boolean agregarCliente(Cliente cliente) {
-        ConectorDatabase conector = new ConectorDatabase();
         String sql = "INSERT INTO Cliente (id, nombre, telefono, email, descuento) VALUES (?, ?, ?, ?, ?)";
 
-        try (Connection conn = conector.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        try (Connection conn = ConectorDatabase.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql)) {
             
             pstmt.setString(1, cliente.getId()); // id
             pstmt.setString(2, cliente.getNombre()); // Nombre
@@ -31,12 +30,11 @@ public class ClienteDAO {
     }
 
     public Cliente buscarClientePorId(String id) {
-        ConectorDatabase conector = new ConectorDatabase();
         String sql = "SELECT * FROM Cliente WHERE id = ?";
         Cliente cliente = null;
 
-        try (Connection conn = conector.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        try (Connection conn = ConectorDatabase.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             pstmt.setString(1, id);
             ResultSet rs = pstmt.executeQuery();
@@ -55,12 +53,11 @@ public class ClienteDAO {
     }
     
     public Cliente buscarClientePorNombre(String nombreCliente) {
-        ConectorDatabase conector = new ConectorDatabase();
         String sql = "SELECT * FROM Cliente WHERE nombre = ?";
         Cliente cliente = null;
 
-        try (Connection conn = conector.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        try (Connection conn = ConectorDatabase.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             pstmt.setString(1, nombreCliente);
             ResultSet rs = pstmt.executeQuery();
@@ -79,11 +76,10 @@ public class ClienteDAO {
 
     
     public Boolean eliminarCliente(String id) {
-        ConectorDatabase conector = new ConectorDatabase();
         String sql = "DELETE FROM Cliente WHERE id = ?";
 
-        try (Connection conn = conector.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        try (Connection conn = ConectorDatabase.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, id);
             int filasAfectadas = pstmt.executeUpdate();
             if (filasAfectadas != 0) {
@@ -96,11 +92,10 @@ public class ClienteDAO {
     }
 
     public Boolean actualizarCliente(Cliente cliente) {
-        ConectorDatabase conector = new ConectorDatabase();
         String sql = "UPDATE Cliente SET nombre = ?, telefono = ?, email = ?, descuento = ? WHERE id = ?";
 
-        try (Connection conn = conector.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        try (Connection conn = ConectorDatabase.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql)) {
             
             pstmt.setString(1, cliente.getNombre());
             pstmt.setString(2, cliente.getTelefono());
@@ -118,13 +113,12 @@ public class ClienteDAO {
     }
 
     public List<Cliente> obtenerTodosLosClientes() {
-        ConectorDatabase conector = new ConectorDatabase();
         String sql = "SELECT * FROM Cliente";
         List<Cliente> clientes = new ArrayList<>();
 
-        try (Connection conn = conector.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql);
-             ResultSet rs = pstmt.executeQuery()) {
+        try (Connection conn = ConectorDatabase.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            ResultSet rs = pstmt.executeQuery()) {
 
             while (rs.next()) {
                 String id = rs.getString("id");

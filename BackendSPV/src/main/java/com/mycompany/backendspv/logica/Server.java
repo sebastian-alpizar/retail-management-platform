@@ -62,8 +62,8 @@ public class Server {
                     try {
                         Object inObjeto = input.readObject();
                         Object outObjeto = null;
-                        if (inObjeto instanceof Mensaje) {
-                            outObjeto = procesarMensaje((Mensaje) inObjeto);
+                        if (inObjeto instanceof Mensaje<?>) {
+                            outObjeto = procesarMensaje((Mensaje<?>) inObjeto);
                             if (!bandera){
                                 output.writeObject(false);
                                 output.flush();
@@ -245,7 +245,7 @@ public class Server {
             return false;
         }
         
-        private Boolean procesaFactura(Mensaje mensaje, String detalle) {
+        private Boolean procesaFactura(Mensaje<?> mensaje, String detalle) {
             if (detalle.equals("Agregar")){
                 Factura factura = (Factura) mensaje.getDatos();
                 return backend.agregarFactura(factura);
@@ -284,7 +284,7 @@ public class Server {
             return null;
         }
         
-        private Boolean enviarFactura(Mensaje mensaje, String detalle){
+        private Boolean enviarFactura(Mensaje<?> mensaje, String detalle){
             String destino = detalle.substring("Enviar a:".length()).trim();
             ObjectOutputStream flujoDestino = flujosClientes.get(destino);
             

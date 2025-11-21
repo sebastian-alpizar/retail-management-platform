@@ -9,17 +9,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class VentaDAO {
-    private ConectorDatabase conector;
-
-    public VentaDAO() {
-        this.conector = new ConectorDatabase();
-    }
-
     public Boolean agregarVenta(String facturaId, String categoria, int year, int month, double totalLinea, String cliente) {
         String sql = "INSERT INTO Venta (facturaId, categoria, year, month, totalLinea, cliente) VALUES (?, ?, ?, ?, ?, ?)";
 
-        try (Connection conn = conector.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        try (Connection conn = ConectorDatabase.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             pstmt.setString(1, facturaId);
             pstmt.setString(2, categoria);
@@ -38,12 +32,12 @@ public class VentaDAO {
 
     public Map<String, Double> obtenerVentasMensualesPorCategoria(String categoria, int year, int month) {
         String sql = "SELECT AVG(totalLinea) AS promedioPrecio, COUNT(*) AS totalVentas, SUM(totalLinea) AS totalCantidad " +
-                     "FROM Venta " +
-                     "WHERE categoria = ? AND year = ? AND month = ?";
+                    "FROM Venta " +
+                    "WHERE categoria = ? AND year = ? AND month = ?";
         Map<String, Double> estadisticas = new HashMap<>();
 
-        try (Connection conn = conector.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        try (Connection conn = ConectorDatabase.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             pstmt.setString(1, categoria);
             pstmt.setInt(2, year);

@@ -10,11 +10,10 @@ import mycompany.sistemaentidades.*;
 
 public class CajeroDAO {
     public Boolean agregarCajero(Cajero cajero) {
-        ConectorDatabase conector = new ConectorDatabase();
         String sql = "INSERT INTO Cajero (id, nombre, telefono, email) VALUES (?, ?, ?, ?)";
 
-        try (Connection conn = conector.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        try (Connection conn = ConectorDatabase.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             pstmt.setString(1, cajero.getId());
             pstmt.setString(2, cajero.getNombre());
@@ -30,12 +29,11 @@ public class CajeroDAO {
     }
 
     public Cajero buscarCajeroPorId(String id) {
-        ConectorDatabase conector = new ConectorDatabase();
         String sql = "SELECT * FROM Cajero WHERE id = ?";
         Cajero cajero = null;
 
-        try (Connection conn = conector.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        try (Connection conn = ConectorDatabase.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             pstmt.setString(1, id);
             ResultSet rs = pstmt.executeQuery();
@@ -53,12 +51,11 @@ public class CajeroDAO {
     }
     
     public Cajero buscarCajeroPorNombre(String nombre) {
-        ConectorDatabase conector = new ConectorDatabase();
         String sql = "SELECT * FROM Cajero WHERE nombre = ?";
         Cajero cajero = null;
 
-        try (Connection conn = conector.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        try (Connection conn = ConectorDatabase.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             pstmt.setString(1, nombre);
             ResultSet rs = pstmt.executeQuery();
@@ -76,11 +73,10 @@ public class CajeroDAO {
     }
 
     public Boolean actualizarCajero(Cajero cajero) {
-        ConectorDatabase conector = new ConectorDatabase();
         String sql = "UPDATE Cajero SET nombre = ?, telefono = ?, email = ? WHERE id = ?";
 
-        try (Connection conn = conector.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        try (Connection conn = ConectorDatabase.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             pstmt.setString(1, cajero.getNombre());
             pstmt.setString(2, cajero.getTelefono());
@@ -97,11 +93,10 @@ public class CajeroDAO {
     }
 
     public Boolean eliminarCajero(String id) {
-        ConectorDatabase conector = new ConectorDatabase();
         String sql = "DELETE FROM Cajero WHERE id = ?";
 
-        try (Connection conn = conector.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        try (Connection conn = ConectorDatabase.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             pstmt.setString(1, id);
             int filasAfectadas = pstmt.executeUpdate();
@@ -114,13 +109,12 @@ public class CajeroDAO {
     }
     
     public List<Cajero> obtenerTodosLosCajeros() {
-        ConectorDatabase conector = new ConectorDatabase();
         String sql = "SELECT * FROM Cajero";
         List<Cajero> cajeros = new ArrayList<>();
 
-        try (Connection conn = conector.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql);
-             ResultSet rs = pstmt.executeQuery()) {
+        try (Connection conn = ConectorDatabase.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            ResultSet rs = pstmt.executeQuery()) {
 
             while (rs.next()) {
                 String id = rs.getString("id");

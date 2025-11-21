@@ -7,7 +7,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.net.Socket;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import javax.swing.SwingUtilities;
@@ -53,8 +52,11 @@ public class LocalBackend implements BackendInterface {
                 }
                 while (true) {
                     objeto = input.readObject();
-                    if (objeto instanceof List<?>) {
-                        clientesEnLinea = (List<String>) objeto;
+                    if (objeto instanceof List<?> lista) {
+                        clientesEnLinea = lista.stream()
+                                                .map(o -> (String) o)
+                                                .toList();
+
                         SwingUtilities.invokeLater(() -> panel.updateTable(clientesEnLinea, user.getId()));
                         
                     } else if (objeto instanceof Map) {
@@ -64,7 +66,7 @@ public class LocalBackend implements BackendInterface {
                         setPermiso((Boolean) objeto);
                         
                     } else if (objeto instanceof Mensaje){
-                        Mensaje mensaje = (Mensaje) objeto;
+                        Mensaje<?> mensaje = (Mensaje<?>) objeto;
                         usuarioController.agregarMensaje(mensaje);
                     }
                 }
@@ -77,7 +79,11 @@ public class LocalBackend implements BackendInterface {
     }
     
     private void procesarUsuariosEnLinea(Map<String, Object> mensajeActualizacion) {
-        clientesEnLinea = (ArrayList<String>) mensajeActualizacion.get("clientesEnLinea");
+        Object rawList = mensajeActualizacion.get("clientesEnLinea");
+        if (rawList instanceof List<?> lista) {
+            clientesEnLinea = lista.stream().map(o -> (String) o).toList();
+        }
+
         String usuarioDesconectado = (String) mensajeActualizacion.get("usuarioDesconectado");
 
         if (usuarioDesconectado != null && frame != null) {
@@ -272,7 +278,7 @@ public class LocalBackend implements BackendInterface {
     }
     
     public Boolean enviarFactura(Factura factura, String destino){
-        Mensaje mensaje = new Mensaje<>("Enviar a:" + destino, factura);
+        Mensaje<?> mensaje = new Mensaje<>("Enviar a:" + destino, factura);
         mensaje.setEmisor(user.getId());
         return (Boolean) enviarMensaje(mensaje);
     }

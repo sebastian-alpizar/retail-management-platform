@@ -14,11 +14,10 @@ public class FacturaDAO {
     }
     
     public Boolean agregarFactura(Factura factura) {
-        ConectorDatabase conector = new ConectorDatabase();
         String sql = "INSERT INTO Factura (id, cliente_nombre, cajero_nombre, fecha, formaPago, total) VALUES (?, ?, ?, ?, ?, ?)";
         
-        try (Connection conn = conector.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        try (Connection conn = ConectorDatabase.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql)) {
             
             pstmt.setString(1, factura.getId());
             pstmt.setString(2, factura.getCliente());
@@ -36,12 +35,11 @@ public class FacturaDAO {
     }
     
     public Factura buscarFactura(String facturaId) {
-        ConectorDatabase conector = new ConectorDatabase();
         String sql = "SELECT * FROM Factura WHERE id = ?";
         Factura factura = null;
         
-        try (Connection conn = conector.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        try (Connection conn = ConectorDatabase.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql)) {
             
             pstmt.setString(1, facturaId);
             ResultSet rs = pstmt.executeQuery();
@@ -66,13 +64,12 @@ public class FacturaDAO {
     
     public List<Factura> obtenerTodasLasFacturas() {
         List<Factura> facturas = new ArrayList<>();
-        ConectorDatabase conector = new ConectorDatabase();
         String sql = "SELECT * FROM Factura";
         
-        try (Connection conn = conector.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql);
-             ResultSet rs = pstmt.executeQuery()) {
-             
+        try (Connection conn = ConectorDatabase.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            ResultSet rs = pstmt.executeQuery()) {
+                
             while (rs.next()) {
                 Factura factura = new Factura(
                     rs.getString("id"),

@@ -10,11 +10,10 @@ import java.util.List;
 
 public class ProductoDAO {
     public Boolean agregarProducto(Producto producto) {
-        ConectorDatabase conector = new ConectorDatabase();
         String sql = "INSERT INTO Producto (codigo, descripcion, unidadMedida, precioUnitario, existencias, categoria) VALUES (?, ?, ?, ?, ?, ?)";
 
-        try (Connection conn = conector.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        try (Connection conn = ConectorDatabase.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             pstmt.setString(1, producto.getCodigo());
             pstmt.setString(2, producto.getDescripcion());
@@ -32,12 +31,11 @@ public class ProductoDAO {
     }
 
     public Producto buscarProductoPorCodigo(String codigo) {
-        ConectorDatabase conector = new ConectorDatabase();
         String sql = "SELECT * FROM Producto WHERE codigo = ?";
         Producto producto = null;
 
-        try (Connection conn = conector.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        try (Connection conn = ConectorDatabase.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             pstmt.setString(1, codigo);
             ResultSet rs = pstmt.executeQuery();
@@ -57,12 +55,11 @@ public class ProductoDAO {
     }
     
     public Producto buscarProductoPorDescripcion(String descripcion) {
-        ConectorDatabase conector = new ConectorDatabase();
         String sql = "SELECT * FROM Producto WHERE descripcion = ?";
         Producto producto = null;
 
-        try (Connection conn = conector.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        try (Connection conn = ConectorDatabase.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             pstmt.setString(1, descripcion);
             ResultSet rs = pstmt.executeQuery();
@@ -82,11 +79,10 @@ public class ProductoDAO {
     }
 
     public Boolean actualizarProducto(Producto producto) {
-        ConectorDatabase conector = new ConectorDatabase();
         String sql = "UPDATE Producto SET descripcion = ?, unidadMedida = ?, precioUnitario = ?, existencias = ?, categoria = ? WHERE codigo = ?";
 
-        try (Connection conn = conector.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        try (Connection conn = ConectorDatabase.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             pstmt.setString(1, producto.getDescripcion());
             pstmt.setString(2, producto.getUnidadMedida());
@@ -105,11 +101,10 @@ public class ProductoDAO {
     }
 
     public Boolean eliminarProducto(String codigo) {
-        ConectorDatabase conector = new ConectorDatabase();
         String sql = "DELETE FROM Producto WHERE codigo = ?";
 
-        try (Connection conn = conector.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        try (Connection conn = ConectorDatabase.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
             pstmt.setString(1, codigo);
             int filasAfectadas = pstmt.executeUpdate();
@@ -122,13 +117,12 @@ public class ProductoDAO {
     }
     
     public List<Producto> obtenerTodosLosProductos() {
-        ConectorDatabase conector = new ConectorDatabase();
         String sql = "SELECT * FROM Producto";
         List<Producto> productos = new ArrayList<>();
 
-        try (Connection conn = conector.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql);
-             ResultSet rs = pstmt.executeQuery()) {
+        try (Connection conn = ConectorDatabase.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            ResultSet rs = pstmt.executeQuery()) {
 
             while (rs.next()) {
                 String codigo = rs.getString("codigo");
@@ -148,13 +142,12 @@ public class ProductoDAO {
     }
     
     public List<String> obtenerCategorias() {
-        ConectorDatabase conector = new ConectorDatabase();
         String sql = "SELECT DISTINCT categoria FROM Producto";
         List<String> categorias = new ArrayList<>();
 
-        try (Connection conn = conector.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql);
-             ResultSet rs = pstmt.executeQuery()) {
+        try (Connection conn = ConectorDatabase.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql);
+            ResultSet rs = pstmt.executeQuery()) {
 
             while (rs.next()) {
                 String categoria = rs.getString("categoria");
