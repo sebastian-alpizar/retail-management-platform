@@ -253,7 +253,8 @@ Opciones recomendadas:
 ## 👤 Autor
 
 **Desarrollado por Sebastián Alpízar Porras**
-GitHub: https://github.com/sebastian-alpizar
+GitHub: https://github.com/sebastian-alpizar  
 Email: sebastianalpiz@gmail.com
+
 
 
