@@ -129,7 +129,7 @@ Asegúrate de tener instalado:
 - IDE recomendado: NetBeans / IntelliJ IDEA
 
 ## 🚀 Instalación
-1️⃣ Clonar el repositorio
+1. Clonar el repositorio
 
 ```bash
 git clone https://github.com/sebastian-alpizar/retail-management-platform.git
@@ -137,45 +137,56 @@ cd retail-management-platform
 ```
 
 ### ⚙️ Configuración del Backend
-2️⃣ Configurar la base de datos MySQL
-
-Crea una base llamada:
-
+2. Configurar la base de datos MySQL
 ```bash
 retail_spv
 ```
 
-Actualiza el archivo `.env` del backend:
+3. Copiar y configurar el archivo `.env` a partir de `.env.example`:
+```bash
+cd BackendSPV
+cp .env.example .env
+```
+Editar `.env` con tus credenciales de base de datos y configuración de puerto:
 
 ```bash
 DB_HOST=localhost
 DB_PORT=3306
-DB_NAME=ProyectoDatabase
+DB_NAME=retail_spv
 DB_USER=root
 DB_PASSWORD=
 ```
 
-3️⃣ Construir el proyecto Backend
+4. Construir el proyecto Backend
 ```bash
 cd BackendSPV
 mvn clean install
 ```
 
-4️⃣ Iniciar el servidor Backend
+5. Iniciar el servidor Backend
 ```bash
 BackendSPV -> BackendSPV.java
 ```
 El servidor comenzará a escuchar en un puerto definido (ej. 5000).
 
 ### 🖥️ Ejecución del Frontend
-5️⃣ Construir el Frontend
+6. Copiar y configurar `.env` a partir de `.env.example`:
 ```bash
 cd SistemaPuntoDeVenta
+cp .env.example .env
+```
+Editar `.env` con las credenciales y puerto del Backend al que conectarse:
+```bash
+APP_PROXY_HOST=localhost
+APP_PROXY_PORT=12345
+```
+
+7. Construir el proyecto
+```bash
 mvn clean install
 ```
 
-6️⃣ Ejecutar el Frontend
-Ejecutar:
+8. Ejecutar Frontend:
 ```bash
 SistemaPuntoDeVenta -> Main.java
 ```
@@ -242,3 +253,5 @@ Opciones recomendadas:
 
 **Desarrollado por Sebastián Alpízar Porras**
 GitHub: https://github.com/sebastian-alpizar
+Email: sebastianalpiz@gmail.com
+
