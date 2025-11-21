@@ -136,7 +136,7 @@ git clone https://github.com/sebastian-alpizar/retail-management-platform.git
 cd retail-management-platform
 ```
 
-## ⚙️ Configuración del Backend
+### ⚙️ Configuración del Backend
 2️⃣ Configurar la base de datos MySQL
 
 Crea una base llamada:
@@ -154,3 +154,91 @@ DB_NAME=ProyectoDatabase
 DB_USER=root
 DB_PASSWORD=
 ```
+
+3️⃣ Construir el proyecto Backend
+```bash
+cd BackendSPV
+mvn clean install
+```
+
+4️⃣ Iniciar el servidor Backend
+```bash
+BackendSPV -> BackendSPV.java
+```
+El servidor comenzará a escuchar en un puerto definido (ej. 5000).
+
+### 🖥️ Ejecución del Frontend
+5️⃣ Construir el Frontend
+```bash
+cd SistemaPuntoDeVenta
+mvn clean install
+```
+
+6️⃣ Ejecutar el Frontend
+Ejecutar:
+```bash
+SistemaPuntoDeVenta -> Main.java
+```
+
+Al iniciar:
+- Solicitará credenciales
+- Se conectará al backend
+- Mostrará la ventana principal del SPV
+- Cargará los usuarios conectados en tiempo real
+
+## 📡 Comunicación del Sistema
+
+🔄 Flujo General
+
+1. Frontend se conecta al servidor mediante sockets
+2. Usuario hace login
+3. Backend autentica y añade a la lista de usuarios conectados
+4. Backend notifica a los demás Frontend
+5. Frontend permite:
+   - Registrar clientes, productos, cajeros
+   - Crear facturas
+   - Visualizar facturas históricas
+6. Usuarios pueden enviar facturas en trámite a cualquier usuario activo
+7. Backend reenvía la factura al destinatario
+8. El destinatario puede recibirla y continuar la operación
+
+## 📊 Ejemplos Visuales
+
+## 🧪 Testing
+
+Los módulos están estructurados para facilitar pruebas unitarias y pruebas manuales:
+
+- Pruebas de sockets
+- Simulación de múltiples Frontend
+- Validación de concurrencia en el Backend
+- Pruebas de transferencia de facturas
+
+## 📦 Despliegue
+
+Opciones recomendadas:
+
+**Opción 1 – Ejecución local distribuida** 
+
+- Backend en un proceso
+- Múltiples Frontend en procesos independientes
+- MySQL local
+
+**Opción 2 – Infraestructura remota**
+
+- Backend en una máquina o servidor
+- Frontend en máquinas cliente
+- Conexión por red local o VPN
+
+## 🗺️ Roadmap
+
+- 🔐 Sistema de roles avanzado
+- 📊 Dashboard con estadísticas visuales
+- 📄 Exportar facturas a PDF
+- 📈 Mejoras de desempeño en sockets
+- 💬 Chat interno entre usuarios
+- 🏪 Multi-sucursal
+
+## 👤 Autor
+
+**Desarrollado por Sebastián Alpízar Porras**
+GitHub: https://github.com/sebastian-alpizar
