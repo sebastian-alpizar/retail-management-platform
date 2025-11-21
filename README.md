@@ -19,15 +19,15 @@ Incluye:
 
 ## ✨ Características Principales
 
-✔️ Arquitectura distribuida con comunicación por sockets
-✔️ Backend multithread actuando como servidor
-✔️ Frontend con arquitectura MVC
-✔️ Transferencia de facturas en trámite entre usuarios
-✔️ Actualización en vivo de usuarios conectados
-✔️ Sistema de login y registro
-✔️ Manipulación de productos, clientes, cajeros y facturas
-✔️ Entidades compartidas mediante módulo independiente
-✔️ Persistencia de datos con MySQL
+✔️ Arquitectura distribuida con comunicación por sockets  
+✔️ Backend multithread actuando como servidor  
+✔️ Frontend con arquitectura MVC  
+✔️ Transferencia de facturas en trámite entre usuarios  
+✔️ Actualización en vivo de usuarios conectados  
+✔️ Sistema de login y registro  
+✔️ Manipulación de productos, clientes, cajeros y facturas  
+✔️ Entidades compartidas mediante módulo independiente  
+✔️ Persistencia de datos con MySQL  
 ✔️ Uso del patrón Proxy para comunicación remota
 
 ## 🏗️ Tecnologías Utilizadas
@@ -57,4 +57,5 @@ Incluye:
 - Maven
 - NetBeans / IntelliJ IDEA
 - Git & GitHub
+
 
